@@ -24,7 +24,7 @@ export class ChatList extends Component {
             return (
               // This could also be a separate component
               <div key={idx}
-                className={this.props.activeFriend === friend.name ? 'ChatList__friend--active' : 'ChatList__friend'}
+                className={'ChatList__friend ' + (this.props.activeFriend === friend.name ? 'ChatList__friend--active' : '')}
                 onClick={() => this.handleFriendClick(friend.name)}
                 >
                 {friend.name}

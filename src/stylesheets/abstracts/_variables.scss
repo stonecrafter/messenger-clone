@@ -1,19 +1,11 @@
-// Colours - these are examples!
-$color-primary: #b0a565;
-$color-primary-light: #ede68a;
-$color-primary-dark: #2A2400;
-$color-secondary: #4C5100;
+// Colours
+$color-border-dark: rgba(0, 0, 0, .20);
+$color-border-light: rgba(0, 0, 0, .10);
+$color-background-light: rgba(0, 0, 0, .05);
+$color-background-green: rgba(103, 184, 104, 1);
 
-// Spacing
-$s-size: 1.2rem;
-$m-size: 1.6rem;
-$l-size: 3.2rem;
-$xl-size: 4.8rem;
+$color-white: #fff;
 
-// Breakpoints
-$desktop-breakpoint: 46em;  // 736px
-$sm-phone-bkp: 27.5em;  // 440px
-$m-phone-bkp: 33.125em; // 530px
+// Sizes
+$font-size-sm: 1.4rem;
 
-// Used in height media query
-$landscape-bkp: 34.38em;  // 550px

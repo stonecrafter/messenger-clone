@@ -1,4 +1,73 @@
 .ChatWindow {
-  border: 1px solid green;
+  // As child of flex container
   flex-grow: 1;
+  // Is itself a flex container
+  display: flex;
+  flex-direction: column;
+
+  &__main {
+    flex-grow: 1;
+    padding: 1.2rem;
+    font-size: $font-size-sm;
+    overflow: auto;
+
+    // Trick to right-align self messages down below
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__message {
+    max-width: 70%;
+    width: fit-content;
+    margin-bottom: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+
+    &--self {
+      background-color: $color-background-green;
+      color: $color-white;
+      align-self: flex-end;
+    }
+
+    &--other {
+      background-color: $color-background-light;
+    }
+  }
+
+  &__input {
+    border-top: 1px solid $color-border-light;
+    display: flex;
+
+    input {
+      flex-grow: 1;
+      min-height: 5rem;
+      outline: none; // I know this is bad for accessibility on its own
+      border: none;
+      padding-left: $font-size-sm;
+      font-size: $font-size-sm;
+
+      &::placeholder {
+        font-size: $font-size-sm;
+      }
+    }
+
+    button {
+      background: none;
+      border: none;
+      font-size: $font-size-sm;
+      margin-right: $font-size-sm;
+      height: fit-content;
+      width: fit-content;
+      align-self: center;
+      font-weight: 700;
+      color: $color-background-green;
+      cursor: pointer;
+      outline: none;
+
+      &:hover,
+      &:focus {
+        color: lighten($color-background-green, 15%);
+      }
+    }
+  }
 }

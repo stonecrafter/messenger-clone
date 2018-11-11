@@ -37,7 +37,7 @@ export class ChatWindow extends Component {
   render() {
     // Destructure the props for readability
     const {
-      friend: { name, img },
+      friend: { name },
       messages
     } = this.props.currentChat;
 
@@ -51,7 +51,7 @@ export class ChatWindow extends Component {
             messages.map((message, idx) => {
               return (
                 <div key={idx}
-                  className="ChatWindow__message"
+                  className={'ChatWindow__message ' + (message.isSelf ? 'ChatWindow__message--self' : 'ChatWindow__message--other')}
                   >
                   {message.message}
                 </div>

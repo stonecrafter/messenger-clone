@@ -1,8 +1,6 @@
-@mixin centerLayout {
-  text-align: center;
-
-  > * {
-    margin: auto;
-    width: 80%;
-  }
+// Centering using flexbox
+@mixin flexCenterCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

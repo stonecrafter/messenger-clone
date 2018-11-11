@@ -1,4 +1,17 @@
 .ChatList {
-  border: 1px solid red;
+  border-right: 1px solid $color-border-dark;
   width: 25%;
+
+  &__header {
+    font-weight: 700;
+  }
+
+  &__friend {
+    @include flexCenterCenter;
+    height: 6.4rem;
+
+    &--active {
+      background-color: $color-background-light;
+    }
+  }
 }

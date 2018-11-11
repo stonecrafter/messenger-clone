@@ -14,12 +14,10 @@ class App extends Component {
       activeFriend: 'Halvard',
       // Each item is a different friend's chat
       // Chats should be an array because we care about preserving order
-      // TODO: add images later, because it's fun :D
       chats: [
         {
           friend: {
-            name: 'Halvard',
-            img: undefined
+            name: 'Halvard'
           },
           // Each object is a message, from earliest to latest
           messages: [
@@ -44,8 +42,7 @@ class App extends Component {
         },
         {
           friend: {
-            name: 'Jasmine',
-            img: undefined,
+            name: 'Jasmine'
           },
           messages: [
             {
