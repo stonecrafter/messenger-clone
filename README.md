@@ -12,7 +12,9 @@ This is a clone of a messenger app. I built it as a code sample for some really 
 There are 3 components.
 
 `App.js` is responsible for keeping track of the overall state, and contains:
+
 `ChatList.js` which keeps track of the list of chats on the left hand side
+
 `ChatWindow.js` which displays the chat for the currently active friend
 
 Most of the styling is inspired by messenger.com
