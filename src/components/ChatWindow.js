@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 
 export class ChatWindow extends Component {
 
-  state = {
-    message: ''
-  }
-
   /**
    * Send the message and clear the input field
    */
   sendMessage = () => {
-    if (this.state.message) {
-      this.props.sendMessage(this.props.currentChat.friend.name, this.state.message);
-      this.setState({ message: '' });
+    if (this.props.currentChat.pendingMessage) {
+      this.props.sendMessage(this.props.currentChat.friend.name, this.props.currentChat.pendingMessage);
+      this.props.changeCurrentMessage('');
     }
   }
 
@@ -20,7 +16,7 @@ export class ChatWindow extends Component {
    * Keep the state in sync with what the user is typing in the text box
    */
   messageChange = (e) => {
-    this.setState({ message: e.target.value });
+    this.props.changeCurrentMessage(e.target.value);
   }
 
   /**
@@ -38,7 +34,9 @@ export class ChatWindow extends Component {
     // Destructure the props for readability
     const {
       friend: { name },
-      messages
+      messages,
+      pendingMessage,
+      writingBack
     } = this.props.currentChat;
 
     return (
@@ -58,12 +56,19 @@ export class ChatWindow extends Component {
               )
             })
           }
+          {
+            writingBack && (
+              <div className="ChatWindow__message ChatWindow__message--other">
+                ...
+              </div>
+            )
+          }
         </main>
         <div className="ChatWindow__input">
           <input
             type="text"
             placeholder="Type a message..."
-            value={this.state.message}
+            value={pendingMessage}
             onChange={this.messageChange}
             onKeyPress={this.handleKeyPress}/>
           <button onClick={this.sendMessage}>Send</button>

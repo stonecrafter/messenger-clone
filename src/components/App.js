@@ -38,7 +38,10 @@ class App extends Component {
               isSelf: true,
               message: 'Thanks!'
             }
-          ]
+          ],
+          pendingMessage: 'Hi',
+          writingBack: false,
+          timeoutId: undefined
         },
         {
           friend: {
@@ -55,7 +58,10 @@ class App extends Component {
               isSelf: true,
               message: 'Nice to meet you!'
             }
-          ]
+          ],
+          pendingMessage: '',
+          writingBack: false,
+          timeoutId: undefined
         }
       ]
     };
@@ -66,6 +72,31 @@ class App extends Component {
    */
   changeActiveFriend = (newFriendName) => {
     this.setState({ activeFriend: newFriendName });
+  }
+
+  /**
+   * Change the pending message on the current friend
+   */
+  changeCurrentMessage = (newMsg) => {
+    const { chats } = this.state;
+
+    // Make a copy of the chat array
+    const chatsCopy = [...chats];
+
+    // Get the index of the current friend
+    const currentFriendIdx = chatsCopy.findIndex((chat) => {
+      return this.state.activeFriend === chat.friend.name;
+    });
+    const currentFriend = chatsCopy[currentFriendIdx];
+
+    const friendCopy = {
+      ...currentFriend,
+      pendingMessage: newMsg
+    };
+
+    chatsCopy.splice(currentFriendIdx, 1, friendCopy);
+
+    this.setState(() => ({ chats: chatsCopy }));
   }
 
   /**
@@ -97,10 +128,53 @@ class App extends Component {
     const currentChat = chatsCopy[currentChatIdx];
     chatsCopy.splice(currentChatIdx, 1);
 
+    // Modify the current chat / friend
     currentChat.messages.push(msgToAdd);
+    currentChat.writingBack = true;
+
+    // Put this chat at the top
     chatsCopy.unshift(currentChat);
 
-    this.setState((prevState) => ({ chats: chatsCopy }));
+    // If a timeout already exists, cancel it and make a new one
+    if (currentChat.timeoutId) {
+      clearTimeout(currentChat.timeoutId);
+    }
+
+    const timeoutId = setTimeout(() => {
+      this.respondMessage(friendName)
+    }, 2000);
+
+    currentChat.timeoutId = timeoutId;
+
+    this.setState(() => ({ chats: chatsCopy }));
+  }
+
+  /**
+   * Simulate a response
+   */
+  respondMessage = (friendName) => {
+    // Construct message to be added
+    const msgToAdd = {
+      sender: friendName,
+      isSelf: false,
+      message: 'Hey!'
+    };
+
+    const { chats } = this.state;
+    const chatsCopy = [...chats];
+
+    const currentChatIdx = chatsCopy.findIndex((chat) => {
+      return friendName === chat.friend.name;
+    });
+    const currentChat = chatsCopy[currentChatIdx];
+
+    currentChat.messages.push(msgToAdd);
+    currentChat.writingBack = false;
+    currentChat.timeoutId = undefined;
+
+    chatsCopy.splice(currentChatIdx, 1, currentChat);
+
+    this.setState(() => ({ chats: chatsCopy }));
   }
 
   render() {
@@ -114,6 +188,7 @@ class App extends Component {
         <ChatWindow
           currentChat={this.state.chats.find((chat) => this.state.activeFriend === chat.friend.name)}
           sendMessage={this.sendMessage}
+          changeCurrentMessage={this.changeCurrentMessage}
         />
       </div>
     );
